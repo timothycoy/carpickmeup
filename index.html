@@ -1,0 +1,145 @@
+﻿<!doctype html>
+<html lang="en" ng-app="carpickmeup">
+    <head>
+        <meta charset="utf-8" />
+        <title>Should it be illegal to drive?</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Social question regarding rather or not driving will ever be made illegal in the future." />
+        <meta name="author" content="Tim Coy" />
+        
+        <link href='//fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+        <!-- TODO: Minify CSS Assets -->
+        <link href="assets/css/bootstrap-site.css" rel="stylesheet" />
+
+        <!--[if lt IE 9]>
+            <script type="text/javascript" src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+            <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/json3/3.2.4/json3.min.js"></script>
+            <script type="text/javascript" src="assets/js/vendor/excanvas.min.js"></script>
+        <![endif]-->
+
+        <!-- TODO: Add favicons -->
+    </head>
+    <body>
+        <div class="area main">
+            <div class="container">
+                <h1>Should it be illegal to drive?</h1>
+                <p class="lead">In the future, where autonomous transportation will be the norm, can you imagine a day where you can tap your phone to have a car pick you up anytime anywhere?  No more struggling to find a parking space, no more insurance, no more buying gas!  In fact, even the concept of owning a vehicle may be considered as old as dial-up Internet.</p>
+                <p class="lead">In this future, eventually society might even go as far as blame people for accidents to the point where human driving is deemed unsafe.</p>
+                <p class="lead">So what do you think?  Should driving be a protected right similar to the 2<sup>nd</sup> amendment, or do you think driving on public roads would ever be considered illegal?</p>
+                <p class="lead">
+                    <a href="#" scroll-to="#vote" class="btn btn-inverse btn-large">Cast Your Vote</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="area alt">
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="span4">
+                        <h3>Current Votes</h3>
+                        <div class="row-fluid" ng-controller="Results">
+                            <div class="span4">
+                                <h5 class="text-info">Legal: <span ng-show="display">{{count.legal}}</span></h5>
+                                <h5 class="text-error">Illegal: <span ng-show="display">{{count.illegal}}</span></h5>
+                            </div>
+                            <div class="span8">
+                                <canvas id="voteChart" class="chart" width="300" height="300" pie-chart="count"></canvas>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span4">
+                        <blockquote>
+                            <h3><big>9</big> out of every <big>10</big> accidents could be prevented!</h3>
+                            <small class="pull-right"><cite title="IEEE"><a href="http://www.ieee.org/about/news/2011/17oct_2011.html" target="_blank">IEEE</a></cite></small>
+                        </blockquote>
+                        <br />
+                    </div>
+                    <div class="span4">
+                        <blockquote>
+                            <h3>In the U.S., driving on public roads is a privilege and not a right.</h3>
+                            <small class="pull-right"><cite title="National Highway Traffic Safety Administration"><a href="http://www.nhtsa.gov/people/injury/olddrive/safe/01c01.htm" target="_blank">National Highway Traffic Safety Administration</a></cite></small>
+                        </blockquote>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="area">
+            <div class="container comments" ng-controller="Comments">
+                <div ng-repeat="comment in comments">
+                    <div ng-switch on="comment.decision">
+                        <h4 ng-switch-when="illegal" class="text-error">Driving should be illegal because...</h4>
+                        <h4 ng-switch-when="legal" class="text-info">Driving should always be legal because...</h4>
+                    </div>
+                    <p>{{comment.message}}</p>
+                    <small>{{comment.name}} - {{comment.time | timeago}}</small>
+                </div>
+                <!-- TODO: Implement paging
+                <div class="pagination">
+                    <ul>
+                        <li class="disabled"><a href="#" prevent-default>«</a></li>
+                        <li class="active"><a href="#" prevent-default>1</a></li>
+                        <li><a href="#" prevent-default>2</a></li>
+                        <li><a href="#" prevent-default>3</a></li>
+                        <li><a href="#" prevent-default>»</a></li>
+                    </ul>
+                </div>
+                -->
+            </div>
+        </div>
+
+        <div id="vote" class="area alt" ng-controller="Vote">
+            <div class="container">
+                <form ng-submit="addVote" ng-show="displayForm">
+                    <h2 class="heading">Your Vote</h2>
+                    <input type="hidden" ng-model="form.decision" current-decision="form.decision" />
+                    <div id="decision" class="btn-group">
+                        <a class="btn" href="#" ng-click="makeDecision(0)" prevent-default>Illegal</a>
+                        <a class="btn" href="#" ng-click="makeDecision(1)" prevent-default>Legal</a>
+                    </div>
+                    <br />
+                    <br />
+                    <p>Message</p>
+                    <textarea class="input-xxlarge" rows="4" ng-model="form.message"></textarea>
+                    <br />
+                    <div id="signinButton">
+                        <img src="assets/images/googlelogin.png" width="187" height="33" />
+                    </div>
+                </form>
+                <div ng-show="displayThanks">
+                    <h2 class=heading">Thank you for voting!</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer alt">
+            <div class="container">
+                <p class="pull-right">Random Thoughts by <a href="http://www.linkedin.com/in/timcoy" target="_blank">Tim Coy</a></p>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="//static.stackmob.com/js/stackmob-js-0.9.1-bundled-min.js"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+        <script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="assets/js/vendor/jquery.scrollTo-1.4.3.1-min.js"></script>
+        <script type="text/javascript" src="assets/js/vendor/jquery.timeago.js"></script>
+        <script type="text/javascript" src="assets/js/vendor/chart.min.js"></script>
+        <!-- TODO: Minify and Combine JS Assets -->
+        <script type="text/javascript" src="assets/js/app/app.js"></script>
+        <script type="text/javascript" src="assets/js/services/events.js"></script>
+        <script type="text/javascript" src="assets/js/services/google.js"></script>
+        <script type="text/javascript" src="assets/js/services/stackmob.js"></script>
+        <script type="text/javascript" src="assets/js/controllers/comments.js"></script>
+        <script type="text/javascript" src="assets/js/controllers/results.js"></script>
+        <script type="text/javascript" src="assets/js/controllers/vote.js"></script>
+        <script type="text/javascript" src="assets/js/directives/common.js"></script>
+        <script type="text/javascript" src="assets/js/directives/results.js"></script>
+        <script type="text/javascript" src="assets/js/directives/vote.js"></script>
+        <script type="text/javascript" src="assets/js/filters/common.js"></script>
+    </body>
+</html>
