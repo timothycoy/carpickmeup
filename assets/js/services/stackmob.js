@@ -2,8 +2,8 @@
     .factory('StackMobService', function () {
 
         StackMob.init({
-            publicKey: "3886f724-8b7a-4dfd-bad2-a8dd3057a5d5",
-            apiVersion: 0
+            publicKey: "51fdcaf7-31c1-4753-a63e-ded9a4dda15f",
+            apiVersion: 1.0
         });
 
         var User = StackMob.Model.extend({ schemaName: "user" });
