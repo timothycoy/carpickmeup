@@ -102,6 +102,7 @@
             //TODO: Have StackMob update their documentation.  It makes no note that you must select the vote_id in order to select the vote_id fields.
             //TODO: Also, orderDesc doesn't appear to work based on referenced field.
             //TODO: Additionally, operators do not appear to work on referenced fields.
+            //TODO: Fix IE9 issue parsing the json return object.
             getComments: function getComments(callback) {
                 var comments = [];
                 var users = new Users();
