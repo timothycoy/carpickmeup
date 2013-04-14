@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var vote = app.controller('Vote', function ($scope, GoogleService, StackMobService) {
+var vote = app.controller('Vote', function ($scope, GooglePlusService, StackMobService) {
     var decisions = ["illegal", "legal"];
 
     $scope.reset = function () {
@@ -18,7 +18,7 @@ var vote = app.controller('Vote', function ($scope, GoogleService, StackMobServi
     };
 
     $scope.addVote = function () {
-        GoogleService.getUser(function (user) {
+        GooglePlusService.getUser(function (user) {
             $scope.form.user = user;
 
             StackMobService.getVote($scope.form, function (vote) {

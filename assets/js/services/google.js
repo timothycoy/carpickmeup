@@ -1,5 +1,5 @@
 ﻿angular.module('carpickmeup.services.google', [])
-    .factory('GoogleService', function () {
+    .factory('GooglePlusService', function () {
 
         (function () {
             var po = document.createElement('script');
@@ -9,9 +9,7 @@
             s.parentNode.insertBefore(po, s);
         })();
 
-
-
-        var GoogleService = {
+        var GooglePlusService = {
             getUser: function getUser(callback) {
                 gapi.client.load('plus', 'v1', function () {
                     gapi.client.plus.people.get({ 'userId': 'me' }).execute(callback);
@@ -19,7 +17,26 @@
             }
         };
 
-        return GoogleService;
+        return GooglePlusService;
+    })
+    .factory('GoogleAnalyticsService', function () {
+
+        console.log("hello");
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-40114880-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+        var GoogleAnalyticsService = {
+
+        };
+
+        return GoogleAnalyticsService;
     });
 
 function googleRender() {

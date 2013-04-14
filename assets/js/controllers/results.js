@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var results = app.controller('Results', function ($scope, StackMobService) {
+var results = app.controller('Results', function ($scope, GoogleAnalyticsService, StackMobService) {
     $scope.reset = function () {
         $scope.display = false;
         $scope.count = {
@@ -43,4 +43,4 @@ var results = app.controller('Results', function ($scope, StackMobService) {
     $scope.countVotes();
 });
 
-results.$inject = ['$scope', 'carpickmeup.services.stackmob'];
+results.$inject = ['$scope', 'carpickmeup.services.google', 'carpickmeup.services.stackmob'];

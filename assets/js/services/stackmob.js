@@ -1,10 +1,18 @@
 ﻿angular.module('carpickmeup.services.stackmob', [])
     .factory('StackMobService', function () {
 
-        StackMob.init({
-            publicKey: "51fdcaf7-31c1-4753-a63e-ded9a4dda15f",
-            apiVersion: 1.0
-        });
+        if (document.location.hostname == "localhost") {
+            StackMob.init({
+                publicKey: "3886f724-8b7a-4dfd-bad2-a8dd3057a5d5",
+                apiVersion: 0
+            });
+        }
+        else {
+            StackMob.init({
+                publicKey: "51fdcaf7-31c1-4753-a63e-ded9a4dda15f",
+                apiVersion: 1.0
+            });
+        }
 
         var User = StackMob.Model.extend({ schemaName: "user" });
         var Users = StackMob.Collection.extend({ model: User });
@@ -102,7 +110,6 @@
             //TODO: Have StackMob update their documentation.  It makes no note that you must select the vote_id in order to select the vote_id fields.
             //TODO: Also, orderDesc doesn't appear to work based on referenced field.
             //TODO: Additionally, operators do not appear to work on referenced fields.
-            //TODO: Fix IE9 issue parsing the json return object.
             getComments: function getComments(callback) {
                 var comments = [];
                 var users = new Users();
