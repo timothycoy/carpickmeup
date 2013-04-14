@@ -1,13 +1,27 @@
 ﻿angular.module('carpickmeup.services.google', [])
+    .factory('GoogleAnalyticsService', function () {
+
+        _gaq.push(['_setAccount', 'UA-40114880-1']);
+        _gaq.push(['_trackPageview']);
+
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+
+        var GoogleAnalyticsService = {
+
+        };
+
+        return GoogleAnalyticsService;
+    })
     .factory('GooglePlusService', function () {
 
-        (function () {
-            var po = document.createElement('script');
-            po.type = 'text/javascript'; po.async = true;
-            po.src = 'https://apis.google.com/js/client:plusone.js?onload=googleRender';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(po, s);
-        })();
+        var po = document.createElement('script');
+        po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/client:plusone.js?onload=googleRender';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(po, s);
 
         var GooglePlusService = {
             getUser: function getUser(callback) {
@@ -18,25 +32,9 @@
         };
 
         return GooglePlusService;
-    })
-    .factory('GoogleAnalyticsService', function () {
-
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-40114880-1']);
-        _gaq.push(['_trackPageview']);
-
-        (function () {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-
-        var GoogleAnalyticsService = {
-
-        };
-
-        return GoogleAnalyticsService;
     });
+
+var _gaq = _gaq || [];
 
 function googleRender() {
     gapi.signin.render('signinButton', {
