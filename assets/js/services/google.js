@@ -21,7 +21,6 @@
     })
     .factory('GoogleAnalyticsService', function () {
 
-        console.log("hello");
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-40114880-1']);
         _gaq.push(['_trackPageview']);
