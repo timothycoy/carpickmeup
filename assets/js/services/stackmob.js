@@ -20,6 +20,9 @@
         var Vote = StackMob.Model.extend({ schemaName: "vote" });
         var Votes = StackMob.Collection.extend({ model: Vote });
 
+        var Log = StackMob.Model.extend({ schemaName: "log" });
+        var Logs = StackMob.Collection.extend({ model: Log });
+
         var StackMobService = {
             getUser: function getUser(data, callback) {
                 var user = new User({ user_id: data.user.id });
@@ -70,12 +73,12 @@
                                 callback(result);
                             },
                             error: function (model, result, options) {
-                                //TODO: Log the error.
+                                StackMobService.logException("carpickmeup.services.stackmob.StackMobService.saveVote", JSON.stringify(result));
                             }
                         });
                     },
                     error: function (model, result, options) {
-                        //TODO: Log the error.
+                        StackMobService.logException("carpickmeup.services.stackmob.StackMobService.saveVote", JSON.stringify(result));
                     }
                 });
             },
@@ -103,7 +106,7 @@
                         callback(count);
                     },
                     error: function (model, result, options) {
-                        //TODO: Log the error.
+                        StackMobService.logException("carpickmeup.services.stackmob.StackMobService.countVotes", JSON.stringify(result));
                     }
                 });
             },
@@ -134,7 +137,27 @@
                         callback(comments);
                     },
                     error: function (model, result, options) {
-                        //TODO: Log the error.
+                        StackMobService.logException("carpickmeup.services.stackmob.StackMobService.getComments", JSON.stringify(result));
+                    }
+                });
+            },
+            logException: function logException(source, exception, callback) {
+                var log = new Log({
+                    source: source,
+                    exception: exception
+                });
+
+                log.create({
+                    success: function (model, result, options) {
+                        if (Object.prototype.toString.call(callback) == "[object Function]") {
+                            console.log("test");
+                            callback(result);
+                        }
+                    },
+                    error: function (model, result, options) {
+                        if (Object.prototype.toString.call(callback) == "[object Function]") {
+                            callback(result);
+                        }
                     }
                 });
             }
