@@ -150,7 +150,6 @@
                 log.create({
                     success: function (model, result, options) {
                         if (Object.prototype.toString.call(callback) == "[object Function]") {
-                            console.log("test");
                             callback(result);
                         }
                     },

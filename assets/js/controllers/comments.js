@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var comments = app.controller('Comments', function ($scope, StackMobService) {
+var comments = app.controller('Comments', function ($scope, ParseService) {
     $scope.reset = function () {
         $scope.comments = [];
     };
@@ -14,7 +14,7 @@ var comments = app.controller('Comments', function ($scope, StackMobService) {
     });
 
     $scope.getComments = function () {
-        StackMobService.getComments(function (comments) {
+        ParseService.getComments(function (comments) {
             $scope.safeApply(function () {
                 $scope.comments = comments;
             });
@@ -35,4 +35,4 @@ var comments = app.controller('Comments', function ($scope, StackMobService) {
     $scope.getComments();
 });
 
-vote.$inject = ['$scope', 'carpickmeup.services.stackmob'];
+vote.$inject = ['$scope', 'carpickmeup.services.parse'];

@@ -1,6 +1,6 @@
 ﻿angular.module('carpickmeup.services.exceptions', [])
-    .factory('$exceptionHandler', function ($injector, StackMobService) {
+    .factory('$exceptionHandler', function ($injector, ParseService) {
         return function (exception, cause) {
-            StackMobService.logException("carpickmeup.global", exception);
+            ParseService.logException("carpickmeup.global", exception);
         }
     });
