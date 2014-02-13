@@ -42,8 +42,8 @@
                         <h3>Current Votes</h3>
                         <div class="row-fluid" ng-controller="Results">
                             <div class="span4">
-                                <h5 class="text-info">Legal: <span ng-show="display">{{count.legal}}</span></h5>
-                                <h5 class="text-error">Illegal: <span ng-show="display">{{count.illegal}}</span></h5>
+                                <h5 class="text-info">Legal: <span ng-show="display" ng-bind="count.legal"></span></h5>
+                                <h5 class="text-error">Illegal: <span ng-show="display" ng-bind="count.illegal"></span></h5>
                             </div>
                             <div class="span8">
                                 <canvas id="voteChart" class="chart" width="300" height="300" pie-chart="count"></canvas>  
@@ -75,7 +75,7 @@
                         <h4 ng-switch-when="illegal" class="text-error">Driving should be illegal because...</h4>
                         <h4 ng-switch-when="legal" class="text-info">Driving should always be legal because...</h4>
                     </div>
-                    <p>{{comment.message}}</p>
+                    <p ng-bind="comment.message"></p>
                     <small>{{comment.name}} - {{comment.time | timeago}}</small>
                 </div>
                 <!-- TODO: Implement paging
