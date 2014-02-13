@@ -93,7 +93,6 @@
                                 time: results[i].createdAt
                             });
                         }
-                        console.log(comments);
                         callback(comments);
                     },
                     error: function (error) {
