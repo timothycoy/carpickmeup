@@ -76,7 +76,7 @@
                         <h4 ng-switch-when="legal" class="text-info">Driving should always be legal because...</h4>
                     </div>
                     <p ng-bind="comment.message"></p>
-                    <small>{{comment.name}} - {{comment.time | timeago}}</small>
+                    <small ng-bind-template="{{comment.name}} - {{comment.time | timeago}}"></small>
                 </div>
                 <!-- TODO: Implement paging
                 <div class="pagination">
