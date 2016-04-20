@@ -14,12 +14,12 @@
             },
             getVote: function getVote(data, callback) {
                 var query = new Backendless.DataQuery();
-                query.condition = "users.google_id='" + data.user.id + "'";
+                query.condition = "google_id='" + data.user.id + "'";
 
-                Backendless.Persistence.of(BackendlessService.Vote).find(query)
-                    .then(function (vote) {
-                        console.log(vote);
-                        callback(vote.data[0]);
+                Backendless.Persistence.of('Users').find(query)
+                    .then(function (user) {
+                        console.log(user);
+                        callback(user.data[0].vote);
                     })
                     .catch(function (error) {
                         BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.getVote", JSON.stringify(error));
