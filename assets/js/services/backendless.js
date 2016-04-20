@@ -14,12 +14,12 @@
             },
             getVote: function getVote(data, callback) {
                 var query = new Backendless.DataQuery();
-                query.condition = "decision='illegal'";
+                query.condition = "users.google_id='" + data.user.id = "'";
 
                 Backendless.Persistence.of(BackendlessService.Vote).find(query)
                     .then(function (vote) {
                         console.log(vote);
-                        callback(vote[0]);
+                        callback(vote.data[0]);
                     })
                     .catch(function (error) {
                         BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.getVote", JSON.stringify(error));
