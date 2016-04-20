@@ -14,13 +14,12 @@
             },
             getVote: function getVote(data, callback) {
                 var query = new Backendless.DataQuery();
-                query.condition = "google_id=" + data.user.id;
-                console.log(Backendless.UserService);
+                query.condition = "users.google_id=" + data.user.id;
 
-                Backendless.Persistence.of(Backendless.UserService.___class).findFirst(query)
-                    .then(function (user) {
-                        console.log(user.vote);
-                        callback(user.vote);
+                Backendless.Persistence.of(BackendlessService.Vote).findFirst(query)
+                    .then(function (vote) {
+                        console.log(vote);
+                        callback(vote);
                     })
                     .catch(function (error) {
                         BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.getVote", JSON.stringify(error));
