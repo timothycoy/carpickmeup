@@ -21,8 +21,9 @@ var vote = app.controller('Vote', function ($scope, GooglePlusService, ParseServ
         GooglePlusService.getUser(function (user) {
             $scope.form.user = user;
 
-            ParseService.getVote($scope.form, function (vote) {
+            BackendlessService.getVote($scope.form, function (vote) {
                 if (vote == null) {
+                    /*
                     BackendlessService.saveVote($scope.form, function () {
                         var vote = {
                             decision: $scope.form.decision,
@@ -32,6 +33,7 @@ var vote = app.controller('Vote', function ($scope, GooglePlusService, ParseServ
                         };
                         $scope.$emit("addEmit", { vote: vote });
                     });
+                    */
                 }
             });
 

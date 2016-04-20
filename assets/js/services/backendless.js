@@ -13,7 +13,17 @@
                 this.message = args.message || "";
             },
             getVote: function getVote(data, callback) {
-
+                var query = {
+                    condition: "decision=legal"
+                };
+                Backendless.Persistence.of(Vote).findFirst()
+                    .then(function (vote) {
+                        console.log(vote);
+                        callback(vote);
+                    })
+                    .catch(function (error) {
+                        BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.getVote", JSON.stringify(error));
+                    })
             },
             saveVote: function insertVote(data, callback) {
                 var user = new Backendless.User();
@@ -30,7 +40,6 @@
 
                 Backendless.UserService.register(user)
                     .then(function (user) {
-                        console.log(user);
                         callback(user.vote);
                     })
                     .catch(function (error) {
