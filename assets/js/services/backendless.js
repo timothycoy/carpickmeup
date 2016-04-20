@@ -13,7 +13,7 @@
                 this.message = args.message || "";
             },
             getVote: function getVote(data, callback) {
-                var query = Backendless.DataQuery();
+                var query = new Backendless.DataQuery();
                 query.options.relationsDepth = 1;
                 query.condition = "decision=legal";
 
