@@ -83,6 +83,7 @@
             getComments: function getComments(callback) {
                 var comments = [];
                 var query = new Backendless.DataQuery();
+                query.condition = "vote.message != ''";
                 query.options = {
                     pageSize: 100,
                     relationsDepth: 1,
