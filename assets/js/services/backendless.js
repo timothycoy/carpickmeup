@@ -16,10 +16,10 @@
                 var query = new Backendless.DataQuery();
                 query.condition = "decision=illegal";
 
-                Backendless.Persistence.of(BackendlessService.Vote).findFirst(query)
+                Backendless.Persistence.of(BackendlessService.Vote).find(query)
                     .then(function (vote) {
                         console.log(vote);
-                        callback(vote);
+                        callback(vote[0]);
                     })
                     .catch(function (error) {
                         BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.getVote", JSON.stringify(error));
