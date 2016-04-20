@@ -8,7 +8,7 @@
 
             Vote: function Vote(args) {
                 args = args || {};
-                this.__class = 'Vote';
+                this.___class = 'Vote';
                 this.decision = args.decision || "";
                 this.message = args.message || "";
                 this.user = args.user || {};
