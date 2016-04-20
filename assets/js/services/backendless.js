@@ -30,7 +30,9 @@
                             user: user
                         });
 
-                        Backendless.Persistence.of(BackendlessService.Vote).save(vote)
+                        user.vote = vote;
+
+                        Backendless.UserService.save(user);
                             .then(function (vote) {
                                 callback(vote);
                             })
