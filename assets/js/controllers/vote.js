@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var vote = app.controller('Vote', function ($scope, GooglePlusService, ParseService) {
+var vote = app.controller('Vote', function ($scope, GooglePlusService, ParseService, BackendlessService) {
     var decisions = ["illegal", "legal"];
 
     $scope.reset = function () {
@@ -23,7 +23,7 @@ var vote = app.controller('Vote', function ($scope, GooglePlusService, ParseServ
 
             ParseService.getVote($scope.form, function (vote) {
                 if (vote == null) {
-                    ParseService.saveVote($scope.form, function () {
+                    BackendlessService.saveVote($scope.form, function () {
                         var vote = {
                             decision: $scope.form.decision,
                             message: $scope.form.message,
@@ -55,4 +55,4 @@ var vote = app.controller('Vote', function ($scope, GooglePlusService, ParseServ
     $scope.reset();
 });
 
-vote.$inject = ['$scope', 'carpickmeup.services.google', 'carpickmeup.services.parse'];
+vote.$inject = ['$scope', 'carpickmeup.services.google', 'carpickmeup.services.parse', 'carpickmeup.services.backendless'];
