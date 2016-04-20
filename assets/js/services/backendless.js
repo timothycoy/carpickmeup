@@ -21,7 +21,8 @@
                 user.google_id = data.user.id;
                 user.name = data.user.displayName;
                 user.password = Math.random().toString(36).substr(2, 8);
-                BackendlessService.UserService.register(user)
+
+                Backendless.UserService.register(user)
                     .then(function (user) {
                         var vote = new BackendlessService.Vote({
                             decision: data.decision,
