@@ -11,7 +11,6 @@
                 this.___class = 'Vote';
                 this.decision = args.decision || "";
                 this.message = args.message || "";
-                this.user = args.user || {};
             },
             getVote: function getVote(data, callback) {
 
@@ -31,7 +30,7 @@
                 Backendless.UserService.register(user)
                     .then(function (user) {
                         console.log(user);
-                        callback(vote);
+                        callback(user.vote);
                     })
                     .catch(function (error) {
                         BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.saveVote", JSON.stringify(error));
