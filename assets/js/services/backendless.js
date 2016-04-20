@@ -31,8 +31,9 @@
 
                         user.vote = vote;
 
-                        Backendless.UserService.save(user)
+                        Backendless.UserService.update(user)
                             .then(function (user) {
+                                console.log(user);
                                 callback(user.vote);
                             })
                             .catch(function (error) {
