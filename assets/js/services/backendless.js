@@ -18,7 +18,6 @@
             },
             saveVote: function insertVote(data, callback) {
                 var user = new Backendless.User();
-                user.__class = 'User';
                 user.google_id = data.user.id;
                 user.name = data.user.displayName;
                 user.password = Math.random().toString(36).substr(2, 8);
@@ -27,13 +26,14 @@
                     .then(function (user) {
                         var vote = new BackendlessService.Vote({
                             decision: data.decision,
-                            message: data.message,
-                            user: user
+                            message: data.message
                         });
 
-                        Backendless.Persistence.of(BackendlessService.Vote).save(vote)
-                            .then(function (vote) {
-                                callback(vote);
+                        user.vote = vote;
+
+                        Backendless.UserService.save(user);
+                            .then(function (user) {
+                                callback(user.vote);
                             })
                             .catch(function (error) {
                                 BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.saveVote", JSON.stringify(error));
