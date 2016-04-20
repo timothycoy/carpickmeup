@@ -21,7 +21,6 @@
 
                 Backendless.Persistence.of(Backendless.User).find(query)
                     .then(function (users) {
-                        console.log(users);
                         callback(users.data[0].vote);
                     })
                     .catch(function (error) {
