@@ -15,11 +15,14 @@
             getVote: function getVote(data, callback) {
                 var query = new Backendless.DataQuery();
                 query.condition = "google_id='" + data.user.id + "'";
+                query.options = {
+                    relationsDepth: 1
+                };
 
                 Backendless.Persistence.of(Backendless.User).find(query)
-                    .then(function (user) {
-                        console.log(user);
-                        callback(user.data[0].vote);
+                    .then(function (users) {
+                        console.log(users);
+                        callback(users.data[0].vote);
                     })
                     .catch(function (error) {
                         BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.getVote", JSON.stringify(error));
