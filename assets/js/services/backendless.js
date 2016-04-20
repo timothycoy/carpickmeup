@@ -14,7 +14,7 @@
             },
             getVote: function getVote(data, callback) {
                 var query = new Backendless.DataQuery();
-                query.condition = "decision=illegal";
+                query.condition = "decision='illegal'";
 
                 Backendless.Persistence.of(BackendlessService.Vote).find(query)
                     .then(function (vote) {
