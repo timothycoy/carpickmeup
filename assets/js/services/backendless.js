@@ -16,7 +16,7 @@
                 var query = {
                     condition: "decision=legal"
                 };
-                Backendless.Persistence.of(Vote).findFirst()
+                Backendless.Persistence.of(BackendlessService.Vote).findFirst()
                     .then(function (vote) {
                         console.log(vote);
                         callback(vote);
