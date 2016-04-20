@@ -18,21 +18,26 @@
             },
             saveVote: function insertVote(data, callback) {
                 var user = new Backendless.User();
+                user.__class = 'User';
                 user.google_id = data.user.id;
                 user.name = data.user.displayName;
                 user.password = Math.random().toString(36).substr(2, 8);
 
-                var vote = new BackendlessService.Vote({
-                    decision: data.decision,
-                    message: data.message,
-                    user: user
-                });
-
-                user.vote = vote;
-
                 Backendless.UserService.register(user)
-                    .then(function (vote) {
-                        callback(vote);
+                    .then(function (user) {
+                        var vote = new BackendlessService.Vote({
+                            decision: data.decision,
+                            message: data.message,
+                            user: user
+                        });
+
+                        Backendless.Persistence.of(BackendlessService.Vote).save(vote)
+                            .then(function (vote) {
+                                callback(vote);
+                            })
+                            .catch(function (error) {
+                                BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.saveVote", JSON.stringify(error));
+                            });
                     })
                     .catch(function (error) {
                         BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.saveVote", JSON.stringify(error));
