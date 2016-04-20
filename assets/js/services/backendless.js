@@ -13,9 +13,11 @@
                 this.message = args.message || "";
             },
             getVote: function getVote(data, callback) {
-                var query = {
+                var query = Backendless.DataQuery();
+                query.options = {
                     condition: "decision=legal"
                 };
+
                 Backendless.Persistence.of(BackendlessService.Vote).findFirst(query)
                     .then(function (vote) {
                         console.log(vote);
