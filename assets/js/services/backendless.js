@@ -24,17 +24,18 @@
 
                 Backendless.UserService.register(user)
                     .then(function (user) {
+                        console.log(user);
+
                         var vote = new BackendlessService.Vote({
                             decision: data.decision,
-                            message: data.message
+                            message: data.message,
+                            user: user
                         });
 
-                        user.vote = vote;
-
-                        Backendless.UserService.update(user)
-                            .then(function (user) {
-                                console.log(user);
-                                callback(user.vote);
+                        Backendless.Persistence.of(BackendlessService.Vote).save(vote)
+                            .then(function (vote) {
+                                console.log(vote);
+                                callback(vote);
                             })
                             .catch(function (error) {
                                 BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.saveVote", JSON.stringify(error));
