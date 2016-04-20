@@ -14,7 +14,7 @@
             },
             getVote: function getVote(data, callback) {
                 var query = new Backendless.DataQuery();
-                query.condition = "users.google_id=" + data.user.id;
+                query.condition = "decision=illegal";
 
                 Backendless.Persistence.of(BackendlessService.Vote).findFirst(query)
                     .then(function (vote) {
