@@ -22,23 +22,17 @@
                 user.name = data.user.displayName;
                 user.password = Math.random().toString(36).substr(2, 8);
 
+                var vote = new BackendlessService.Vote({
+                    decision: data.decision,
+                    message: data.message,
+                    user: user
+                });
+
+                user.vote = vote;
+
                 Backendless.UserService.register(user)
-                    .then(function (user) {
-                        var vote = new BackendlessService.Vote({
-                            decision: data.decision,
-                            message: data.message,
-                            user: user
-                        });
-
-                        user.vote = vote;
-
-                        Backendless.UserService.save(user)
-                            .then(function (vote) {
-                                callback(vote);
-                            })
-                            .catch(function (error) {
-                                BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.saveVote", JSON.stringify(error));
-                            });
+                    .then(function (vote) {
+                        callback(vote);
                     })
                     .catch(function (error) {
                         BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.saveVote", JSON.stringify(error));
