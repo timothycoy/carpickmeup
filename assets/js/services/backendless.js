@@ -21,7 +21,11 @@
 
                 Backendless.Persistence.of(Backendless.User).find(query)
                     .then(function (users) {
-                        callback(users.data[0].vote);
+                        if (users.totalObjects > 0) {
+                            callback(users.data[0].vote);
+                        } else {
+                            callback(null);
+                        }
                     })
                     .catch(function (error) {
                         BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.getVote", JSON.stringify(error));
