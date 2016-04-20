@@ -13,16 +13,14 @@
                 this.message = args.message || "";
             },
             getVote: function getVote(data, callback) {
+                console.log(data);
                 var query = new Backendless.DataQuery();
-                query.options = {
-                    relationsDepth: 1
-                }
-                query.condition = "decision=legal";
+                query.condition = "google_id=" + data.user.id;
 
-                Backendless.Persistence.of(BackendlessService.Vote).findFirst(query)
-                    .then(function (vote) {
-                        console.log(vote);
-                        callback(vote);
+                Backendless.Persistence.of(Backendless.UserService).findFirst(query)
+                    .then(function (user) {
+                        console.log(user.vote);
+                        callback(user.vote);
                     })
                     .catch(function (error) {
                         BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.getVote", JSON.stringify(error));
