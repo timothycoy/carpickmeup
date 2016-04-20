@@ -16,15 +16,16 @@
 
             },
             saveVote: function insertVote(data, callback) {
+                var user = new Backendless.User();
+                user.google_id = data.user.id;
+                user.name = data.user.displayName;
+                user.password = Math.random().toString(36).substr(2, 8);
+
                 var vote = new BackendlessService.Vote({
                     decision: data.decision,
                     message: data.message
                 });
 
-                var user = new Backendless.User();
-                user.google_id = data.user.id;
-                user.name = data.user.displayName;
-                user.password = Math.random().toString(36).substr(2, 8);
                 user.vote = vote;
 
                 Backendless.UserService.register(user)
