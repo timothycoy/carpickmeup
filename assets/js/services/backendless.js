@@ -15,7 +15,7 @@
             getVote: function getVote(data, callback) {
                 var query = new Backendless.DataQuery();
                 query.condition = "google_id=" + data.user.id;
-                console.log(BackendlessService.UserService);
+                console.log(Backendless.UserService);
 
                 Backendless.Persistence.of(Backendless.UserService.___class).findFirst(query)
                     .then(function (user) {
