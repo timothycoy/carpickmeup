@@ -32,7 +32,7 @@
 
                         user.vote = vote;
 
-                        Backendless.UserService.save(user);
+                        Backendless.UserService.save(user)
                             .then(function (vote) {
                                 callback(vote);
                             })
