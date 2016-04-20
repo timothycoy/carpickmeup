@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var comments = app.controller('Comments', function ($scope, ParseService) {
+var comments = app.controller('Comments', function ($scope, BackendlessService) {
     $scope.reset = function () {
         $scope.comments = [];
     };
@@ -14,7 +14,7 @@ var comments = app.controller('Comments', function ($scope, ParseService) {
     });
 
     $scope.getComments = function () {
-        ParseService.getComments(function (comments) {
+        BackendlessService.getComments(function (comments) {
             $scope.safeApply(function () {
                 $scope.comments = comments;
             });
@@ -35,4 +35,4 @@ var comments = app.controller('Comments', function ($scope, ParseService) {
     $scope.getComments();
 });
 
-vote.$inject = ['$scope', 'carpickmeup.services.parse'];
+vote.$inject = ['$scope', 'carpickmeup.services.backendless'];

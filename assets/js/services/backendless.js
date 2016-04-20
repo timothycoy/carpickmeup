@@ -49,10 +49,57 @@
                     })
             },
             countVotes: function countVotes(callback) {
+                var count = {
+                    legal: 0,
+                    illegal: 0
+                };
 
+                var legalQuery = new Backendless.DataQuery();
+                legalQuery.condition = "decision='legal'";
+
+                Backendless.Persistence.of(BackendlessService.Vote).find(legalQuery)
+                    .then(function (legalVotes) {
+                        count.legal = legalVotes.totalObjects;
+                        var illegalQuery = new Backendless.DataQuery();
+                        illegalQuery.condition = "decision='illegal'";
+                        
+                        Backendless.Persistence.of(BackendlessService.Vote).find(illegalQuery)
+                            .then(function (illegalVotes) {
+                                count.illegal = illegalVotes.totalObjects;
+                                callback(count);
+                            })
+                            .catch(function (error) {
+                                BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.countVotes", JSON.stringify(error));
+                            })
+                    })
+                    .catch(function (error) {
+                        BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.countVotes", JSON.stringify(error));
+                    })
             },
             getComments: function getComments(callback) {
+                var comments = [];
+                var query = new Backendless.DataQuery();
+                query.options = {
+                    pageSize: 100,
+                    relationsDepth: 1,
+                    sortBy: "created desc"
+                };
 
+                Backendless.Persistence.of(Backendless.User).find(query)
+                    .then(function (users) {
+                        for (var i = 0; i < users.data.length; i++) {
+                            comments.push({
+                                decision: users.data[i].vote.decision,
+                                message: users.data[i].vote.message,
+                                name: users.data[i].name,
+                                time: users.data[i].created
+                            });
+                        }
+                        callback(comments);
+                    })
+                    .catch(function (error) {
+                        BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.getComments", JSON.stringify(error));
+                    })
             },
             Log: function Log(args) {
                 args = args || {};

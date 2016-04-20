@@ -1,6 +1,6 @@
 ﻿carpickmeup.com
 =======
-An idea I had, that I decided to use to as a basis for my weekend project.  This is my first project with AngularJS and StackMob.  It has now been re-written using parse.
+An idea I had, that I decided to use to as a basis for my weekend project.  This is my first project with AngularJS and StackMob.  It has now been re-written using parse.  It has now been re-written using backendless.
 
 Development Software
 -------
@@ -15,6 +15,7 @@ Web Frameworks and Libraries
 - Angularjs
 - Stackmob
 - Parse
+- Backendless
 - Google+ Login
 - Twitter Bootstrap
 - Google Web Fonts

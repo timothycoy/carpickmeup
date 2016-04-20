@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var results = app.controller('Results', function ($scope, GoogleAnalyticsService, ParseService) {
+var results = app.controller('Results', function ($scope, GoogleAnalyticsService, BackendlessService) {
     $scope.reset = function () {
         $scope.display = false;
         $scope.count = {
@@ -21,7 +21,7 @@ var results = app.controller('Results', function ($scope, GoogleAnalyticsService
     });
 
     $scope.countVotes = function () {
-        ParseService.countVotes(function (count) {
+        BackendlessService.countVotes(function (count) {
             $scope.safeApply(function () {
                 $scope.count = count;
                 $scope.display = true;
@@ -43,4 +43,4 @@ var results = app.controller('Results', function ($scope, GoogleAnalyticsService
     $scope.countVotes();
 });
 
-results.$inject = ['$scope', 'carpickmeup.services.google', 'carpickmeup.services.parse'];
+results.$inject = ['$scope', 'carpickmeup.services.google', 'carpickmeup.services.backendless'];
