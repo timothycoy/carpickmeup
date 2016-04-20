@@ -13,9 +13,9 @@
                 this.message = args.message || "";
             },
             getVote: function getVote(data, callback) {
-                console.log(data);
                 var query = new Backendless.DataQuery();
                 query.condition = "google_id=" + data.user.id;
+                console.log(BackendlessService.UserService);
 
                 Backendless.Persistence.of(Backendless.UserService.___class).findFirst(query)
                     .then(function (user) {
