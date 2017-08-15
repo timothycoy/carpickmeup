@@ -1,8 +1,7 @@
 ﻿angular.module('carpickmeup.services.backendless', [])
     .factory('BackendlessService', function () {
 
-        Backendless.initApp("48FB06E8-E74D-B632-FFFA-922A7FC5B000", "ED230901-C86D-788D-FFBF-EDC598853900", "v1")
-        Backendless.enablePromises();
+        Backendless.initApp("C4CCD163-1F6E-A172-FFEC-F01E4BE88000", "ED230901-C86D-788D-FFBF-EDC598853900");
 
         var BackendlessService = {
 
@@ -13,16 +12,14 @@
                 this.message = args.message || "";
             },
             getVote: function getVote(data, callback) {
-                var query = new Backendless.DataQuery();
-                query.condition = "google_id='" + data.user.id + "'";
-                query.options = {
-                    relationsDepth: 1
-                };
+                var query = new Backendless.DataQueryBuilder.create();
+                query.setWhereClause("google_id='" + data.user.id + "'");
+                query.setRelated(["vote"]);
 
                 Backendless.Persistence.of(Backendless.User).find(query)
                     .then(function (users) {
-                        if (users.totalObjects > 0) {
-                            callback(users.data[0].vote);
+                        if (users.length > 0) {
+                            callback(users[0].vote);
                         } else {
                             callback(null);
                         }
@@ -58,18 +55,18 @@
                     illegal: 0
                 };
 
-                var legalQuery = new Backendless.DataQuery();
-                legalQuery.condition = "decision='legal'";
+                var legalQuery = new Backendless.DataQueryBuilder.create();
+                legalQuery.setWhereClause("decision='legal'");
 
-                Backendless.Persistence.of(BackendlessService.Vote).find(legalQuery)
+                Backendless.Persistence.of(BackendlessService.Vote).getObjectCount(legalQuery)
                     .then(function (legalVotes) {
-                        count.legal = legalVotes.totalObjects;
-                        var illegalQuery = new Backendless.DataQuery();
-                        illegalQuery.condition = "decision='illegal'";
+                        count.legal = legalVotes;
+                        var illegalQuery = new Backendless.DataQueryBuilder.create();
+                        illegalQuery.setWhereClause("decision='illegal'");
                         
-                        Backendless.Persistence.of(BackendlessService.Vote).find(illegalQuery)
+                        Backendless.Persistence.of(BackendlessService.Vote).getObjectCount(illegalQuery)
                             .then(function (illegalVotes) {
-                                count.illegal = illegalVotes.totalObjects;
+                                count.illegal = illegalVotes;
                                 callback(count);
                             })
                             .catch(function (error) {
@@ -82,22 +79,20 @@
             },
             getComments: function getComments(callback) {
                 var comments = [];
-                var query = new Backendless.DataQuery();
-                query.condition = "vote.message != ''";
-                query.options = {
-                    pageSize: 100,
-                    relationsDepth: 1,
-                    sortBy: "created desc"
-                };
+                var query = new Backendless.DataQueryBuilder.create();
+                query.setWhereClause("vote.message != ''");
+                query.setRelated(["vote"]);
+                query.setPageSize(100);
+                query.setSortBy(["created desc"]);
 
                 Backendless.Persistence.of(Backendless.User).find(query)
                     .then(function (users) {
-                        for (var i = 0; i < users.data.length; i++) {
+                        for (var i = 0; i < users.length; i++) {
                             comments.push({
-                                decision: users.data[i].vote.decision,
-                                message: users.data[i].vote.message,
-                                name: users.data[i].name,
-                                time: users.data[i].created
+                                decision: users[i].vote.decision,
+                                message: users[i].vote.message,
+                                name: users[i].name,
+                                time: users[i].created
                             });
                         }
                         callback(comments);
@@ -112,6 +107,8 @@
                 this.exception = args.exception || "";
             },
             logException: function logException(source, exception) {
+                console.log(exception);
+                console.log(source);
                 var log = new BackendlessService.Log({
                     source: source,
                     exception: exception
