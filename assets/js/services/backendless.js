@@ -29,6 +29,7 @@
                     })
             },
             saveVote: function insertVote(data, callback) {
+                console.log('insert');
                 var user = new Backendless.User();
                 user.google_id = data.user.id;
                 user.name = data.user.displayName;
@@ -43,6 +44,7 @@
 
                 Backendless.UserService.register(user)
                     .then(function (user) {
+                        console.log(user);
                         callback(user.vote);
                     })
                     .catch(function (error) {
