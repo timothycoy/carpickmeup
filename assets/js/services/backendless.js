@@ -43,21 +43,15 @@
                     .then(function (user) {
                         Backendless.Persistence.of(BackendlessService.Vote).save(vote)
                             .then(function (vote) {
-                                console.log("1");
                                 Backendless.Persistence.of("Users").addRelation(user, "vote:Vote:1", [vote])
                                     .then(function() {
-                                        console.log("2");
                                         callback(vote);
                                     })
                                     .catch(function (error) {
-                                        console.log("2a");
-                                        console.log(error);
                                         BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.saveVote", JSON.stringify(error));
                                     })
                             })
                             .catch(function (error) {
-                                console.log("1a");
-                                console.log(error);
                                 BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.saveVote", JSON.stringify(error));
                             })
 
