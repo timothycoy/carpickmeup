@@ -29,7 +29,6 @@
                     })
             },
             saveVote: function insertVote(data, callback) {
-                console.log('insert');
                 var user = new Backendless.User();
                 user.google_id = data.user.id;
                 user.name = data.user.displayName;
@@ -40,12 +39,17 @@
                     message: data.message
                 });
 
-                user.vote = vote;
-
                 Backendless.UserService.register(user)
                     .then(function (user) {
-                        console.log(user);
-                        callback(user.vote);
+                        Backendless.Persistence.of(BackendlessService.Vote).save(vote)
+                            .then(function (vote) {
+                                console.log(vote);
+                            })
+                            .catch(function (error) {
+                                BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.saveVote", JSON.stringify(error));
+                            })
+
+                        // callback(user.vote);
                     })
                     .catch(function (error) {
                         BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.saveVote", JSON.stringify(error));
