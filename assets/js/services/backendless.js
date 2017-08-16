@@ -50,11 +50,14 @@
                                         callback(vote);
                                     })
                                     .catch(function (error) {
+                                        console.log("2a");
                                         console.log(error);
                                         BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.saveVote", JSON.stringify(error));
                                     })
                             })
                             .catch(function (error) {
+                                console.log("1a");
+                                console.log(error);
                                 BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.saveVote", JSON.stringify(error));
                             })
 
