@@ -44,7 +44,7 @@
                         Backendless.Persistence.of(BackendlessService.Vote).save(vote)
                             .then(function (vote) {
                                 console.log("1");
-                                Backendless.Persistence.of("User").addRelation(user, "vote:Vote:1")
+                                Backendless.Persistence.of("User").addRelation(user, "vote:Vote:1", [vote])
                                     .then(function() {
                                         console.log("2");
                                         callback(vote);
