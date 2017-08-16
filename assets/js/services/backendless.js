@@ -50,6 +50,7 @@
                                         callback(vote);
                                     })
                                     .catch(function (error) {
+                                        console.log(error);
                                         BackendlessService.logException("carpickmeup.services.backendless.BackendlessService.saveVote", JSON.stringify(error));
                                     })
                             })
