@@ -19,14 +19,15 @@
 
         var po = document.createElement('script');
         po.type = 'text/javascript'; po.async = true;
-        po.src = 'https://apis.google.com/js/client:plusone.js?onload=googleRender';
+        po.src = 'https://apis.google.com/js/platform.js?onload=googleInit';
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(po, s);
 
         var GooglePlusService = {
             getUser: function getUser(callback) {
-                gapi.client.load('plus', 'v1', function () {
-                    gapi.client.plus.people.get({ 'userId': 'me' }).execute(callback);
+                callback({
+                    id: gapi.auth2.getAuthInstance().currentUser.get().getId(),
+                    displayName: gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getName()
                 });
             }
         };
@@ -36,21 +37,22 @@
 
 var _gaq = _gaq || [];
 
-function googleRender() {
-    gapi.signin.render('signinButton', {
-        'callback': 'googleSigninCallback',
-        'clientid': '64456653882.apps.googleusercontent.com',
-        'cookiepolicy': 'single_host_origin',
-        'scope': 'https://www.googleapis.com/auth/plus.login'
+function googleInit() {
+    gapi.load('auth2', function () {
+        auth2 = gapi.auth2.init({
+            client_id: '64456653882.apps.googleusercontent.com',
+            cookiepolicy: 'single_host_origin',
+            scope: 'profile email'
+        });
+
+        auth2.attachClickHandler(document.getElementById('signinButton'), {}, googleSigninSuccessCallback);
     });
 }
 
-function googleSigninCallback(response) {
-    if (typeof response.error === "undefined") {
-        var e = document.getElementById("vote");
-        var scope = angular.element(e).scope();
-        scope.$apply(function () {
-            scope.addVote();
-        });
-    }
+function googleSigninSuccessCallback() {
+    var e = document.getElementById("vote");
+    var scope = angular.element(e).scope();
+    scope.$apply(function () {
+        scope.addVote();
+    });
 }
