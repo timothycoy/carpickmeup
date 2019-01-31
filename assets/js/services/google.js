@@ -56,3 +56,4 @@ function googleSigninSuccessCallback() {
         scope.addVote();
     });
 }
+
